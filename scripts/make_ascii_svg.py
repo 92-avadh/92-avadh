@@ -6,18 +6,18 @@ def generate_ascii_svg():
     username = "92-avadh"
 
     ascii_art_lines = [
-        "   _  ___              ___                  |",
-        "  / _||__ \\   ____    / _ \\ _   ____ _  __| |",
-        " | (_) / /   / _  |  / /_\\ \\ \\ / / _` |/ _` |",
-        "  \\__, / /_ | (_| | / / _ \\ \\ V / (_| | (_| |",
-        "    /_/____| \\__,_|/_/   \\_\\ \\_/ \\__,_|\\__,_|",
-        " --------------------------------------------",
-        "  ROLE    : BCA Student @ SDJIC (VNSGU)",
-        "  FOCUS   : Web Dev & Software Engineering",
-        "  STACK   : JS, HTML/CSS, React, Python",
-        "  STATUS  : 🟢 Active & Open Source Dev",
-        " --------------------------------------------",
-        " [####################################] 100%"
+        r"   _  ___              ___                  |",
+        r"  / _||__ \   ____    / _ \ _   ____ _  __| |",
+        r" | (_) / /   / _  |  / /_\ \ \ / / _` |/ _` |",
+        r"  \__, / /_ | (_| | / / _ \ \ V / (_| | (_| |",
+        r"    /_/____| \__,_|/_/   \_\ \_/ \__,_|\__,_|",
+        r" --------------------------------------------",
+        r"  ROLE    : BCA Student @ SDJIC (VNSGU)",
+        r"  FOCUS   : Web Dev & Software Engineering",
+        r"  STACK   : JS, HTML/CSS, React, Python",
+        r"  STATUS  : 🟢 Active & Open Source Dev",
+        r" --------------------------------------------",
+        r" [####################################] 100%"
     ]
 
     rows_xml = []
@@ -43,8 +43,8 @@ def generate_ascii_svg():
 
     svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
   <style>
-    .bg {{ fill: #0d1117; rx: 8px; stroke: #30363d; stroke-width: 1px; }}
-    .title-bar {{ fill: #161b22; rx: 8px; }}
+    .bg {{ fill: #0d1117; stroke: #30363d; stroke-width: 1px; }}
+    .title-bar {{ fill: #161b22; }}
     .title-text {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; font-weight: bold; fill: #3fb950; }}
     .code {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; white-space: pre; }}
     
@@ -70,10 +70,10 @@ def generate_ascii_svg():
   </style>
 
   <!-- Card Background -->
-  <rect class="bg" width="{width}" height="{height}" />
+  <rect class="bg" width="{width}" height="{height}" rx="8" ry="8" />
 
   <!-- Window Controls Header -->
-  <rect class="title-bar" width="{width}" height="36" />
+  <rect class="title-bar" width="{width}" height="36" rx="8" ry="8" />
   <circle cx="20" cy="18" r="5" fill="#ff5f56" />
   <circle cx="36" cy="18" r="5" fill="#ffbd2e" />
   <circle cx="52" cy="18" r="5" fill="#27c93f" />
@@ -83,13 +83,13 @@ def generate_ascii_svg():
 {chr(10).join(rows_xml)}
 
   <!-- Blinking Cursor -->
-  <rect class="cursor" x="338" y="247" width="8" height="12" rx="1" />
+  <rect class="cursor" x="338" y="247" width="8" height="12" rx="1" ry="1" />
 </svg>'''
 
     with open("avadh-ascii.svg", "w", encoding="utf-8") as f:
         f.write(svg_content)
 
-    print("Successfully generated valid GitHub-compatible avadh-ascii.svg")
+    print("Successfully updated avadh-ascii.svg cleanly")
 
 if __name__ == "__main__":
     generate_ascii_svg()

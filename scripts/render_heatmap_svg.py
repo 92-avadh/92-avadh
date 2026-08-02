@@ -52,7 +52,7 @@ def render_heatmap():
 
     svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
   <style>
-    .bg {{ fill: #0d1117; rx: 8px; stroke: #30363d; stroke-width: 1px; }}
+    .bg {{ fill: #0d1117; stroke: #30363d; stroke-width: 1px; }}
     .title {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; font-weight: bold; fill: #58a6ff; }}
     .stats {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #8b949e; }}
     .stat-val {{ fill: #3fb950; font-weight: bold; }}
@@ -71,7 +71,7 @@ def render_heatmap():
   </style>
 
   <!-- Background -->
-  <rect class="bg" width="{width}" height="{height}" />
+  <rect class="bg" width="{width}" height="{height}" rx="8" ry="8" />
 
   <!-- Header & Stats -->
   <text x="20" y="26" class="title">⚡ {username} / contribution-graph</text>
@@ -92,7 +92,7 @@ def render_heatmap():
   <!-- Legend -->
   <g transform="translate(710, 137)">
     <text x="-32" y="9" class="legend-text">Less</text>
-    <rect x="0" y="0" width="10" height="10" rx="2" fill="#161b22" />
+    <rect x="0" y="0" width="10" height="10" rx="2" ry="2" fill="#161b22" />
     <rect x="13" y="0" width="10" height="10" rx="2" fill="#0e4429" />
     <rect x="26" y="0" width="10" height="10" rx="2" fill="#006d32" />
     <rect x="39" y="0" width="10" height="10" rx="2" fill="#26a641" />
@@ -105,7 +105,7 @@ def render_heatmap():
     with open("contrib-heatmap.svg", "w", encoding="utf-8") as f:
         f.write(svg_content)
 
-    print("Successfully generated valid GitHub-compatible contrib-heatmap.svg")
+    print("Successfully updated contrib-heatmap.svg with clean W3C valid CSS")
 
 if __name__ == "__main__":
     render_heatmap()

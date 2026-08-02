@@ -43,8 +43,8 @@ def render_info_card():
         
         xml_elements.append(f'''    <g class="fade-item" style="animation-delay: {delay}s;">
       <text x="20" y="{y}" class="skill-name">{skill_name}</text>
-      <rect x="180" y="{y-9}" width="160" height="7" rx="3" fill="#161b22" />
-      <rect x="180" y="{y-9}" width="{bar_width}" height="7" rx="3" fill="{color}" />
+      <rect x="180" y="{y-9}" width="160" height="7" rx="3" ry="3" fill="#161b22" />
+      <rect x="180" y="{y-9}" width="{bar_width}" height="7" rx="3" ry="3" fill="{color}" />
       <text x="350" y="{y}" class="percent-text" fill="{color}">{percent}%</text>
     </g>''')
 
@@ -53,12 +53,12 @@ def render_info_card():
     squares = []
     for idx, c in enumerate(palette_colors):
         x = 400 + (idx * 11)
-        squares.append(f'<rect x="{x}" y="255" width="8" height="8" rx="2" fill="{c}" />')
+        squares.append(f'<rect x="{x}" y="255" width="8" height="8" rx="2" ry="2" fill="{c}" />')
 
     svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
   <style>
-    .card-bg {{ fill: #0d1117; rx: 8px; stroke: #30363d; stroke-width: 1px; }}
-    .title-bar {{ fill: #161b22; rx: 8px; }}
+    .card-bg {{ fill: #0d1117; stroke: #30363d; stroke-width: 1px; }}
+    .title-bar {{ fill: #161b22; }}
     .title-text {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; font-weight: bold; fill: #58a6ff; }}
     .label {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; font-weight: bold; fill: #58a6ff; }}
     .val {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }}
@@ -77,10 +77,10 @@ def render_info_card():
   </style>
 
   <!-- Background -->
-  <rect class="card-bg" width="{width}" height="{height}" />
+  <rect class="card-bg" width="{width}" height="{height}" rx="8" ry="8" />
 
   <!-- Title Bar -->
-  <rect class="title-bar" width="{width}" height="36" />
+  <rect class="title-bar" width="{width}" height="36" rx="8" ry="8" />
   <circle cx="20" cy="18" r="5" fill="#ff5f56" />
   <circle cx="36" cy="18" r="5" fill="#ffbd2e" />
   <circle cx="52" cy="18" r="5" fill="#27c93f" />
@@ -98,7 +98,7 @@ def render_info_card():
     with open("info-card.svg", "w", encoding="utf-8") as f:
         f.write(svg_content)
 
-    print("Successfully generated valid GitHub-compatible info-card.svg")
+    print("Successfully updated info-card.svg with clean W3C valid CSS")
 
 if __name__ == "__main__":
     render_info_card()
