@@ -1,420 +1,470 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="860" height="160" viewBox="0 0 860 160">
+<svg xmlns="http://www.w3.org/2000/svg" width="910" height="175" viewBox="0 0 910 175">
+  <defs>
+    <linearGradient id="bg-grad-heat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080911" />
+      <stop offset="50%" stop-color="#0f1322" />
+      <stop offset="100%" stop-color="#05060b" />
+    </linearGradient>
+    <linearGradient id="border-grad-heat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.6" />
+      <stop offset="50%" stop-color="#76ff03" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#7f00ff" stop-opacity="0.6" />
+    </linearGradient>
+    <linearGradient id="laser-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="transparent" />
+      <stop offset="50%" stop-color="#00e5ff" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="transparent" />
+    </linearGradient>
+    <filter id="neon-glow-heat" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
   <style>
-    .bg { fill: #0d1117; rx: 8px; stroke: #30363d; stroke-width: 1px; }
-    .title { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; font-weight: 600; fill: #58a6ff; }
-    .stats { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #8b949e; }
-    .stat-val { fill: #3fb950; font-weight: bold; }
-    .lbl { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; fill: #6e7681; }
-    .legend-text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #8b949e; }
+    .card-bg { fill: url(#bg-grad-heat); rx: 12px; }
+    .card-border { fill: none; stroke: url(#border-grad-heat); stroke-width: 1.5px; rx: 12px; }
+    .title { font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; font-weight: bold; fill: #00e5ff; filter: url(#neon-glow-heat); }
+    .stats { font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #8b949e; }
+    .stat-val { fill: #76ff03; font-weight: bold; filter: url(#neon-glow-heat); }
+    .lbl { font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; fill: #6e7681; }
+    .legend-text { font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #8b949e; }
+    
     .box {
       opacity: 0;
       transform-origin: center;
-      animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    @keyframes slideIn {
-      0% {
-        opacity: 0;
-        transform: translateY(6px) scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+
+    .pulse {
+      animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards, neonPulse 2s ease-in-out infinite alternate;
+    }
+
+    .laser-beam {
+      animation: sweepLaser 5s ease-in-out infinite;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(6px) scale(0.7); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes neonPulse {
+      0% { opacity: 0.8; filter: drop-shadow(0 0 1px #76ff03); }
+      100% { opacity: 1; filter: drop-shadow(0 0 4px #76ff03); }
+    }
+
+    @keyframes sweepLaser {
+      0% { transform: translateX(0); opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { transform: translateX(820px); opacity: 0; }
     }
   </style>
 
-  <!-- Container -->
-  <rect class="bg" width="860" height="160" />
+  <!-- Background -->
+  <rect class="card-bg" width="910" height="175" />
+  <rect class="card-border" width="910" height="175" />
 
-  <!-- Header & Stats -->
-  <text x="20" y="26" class="title">⚡ 92-avadh / contribution-graph</text>
-  <text x="560" y="26" class="stats">
+  <!-- Header -->
+  <text x="22" y="28" class="title">⚡ 92-avadh / live-contribution-heatmap</text>
+  <text x="590" y="28" class="stats">
     Total: <tspan class="stat-val">274</tspan> | 
     Streak: <tspan class="stat-val">7d</tspan> | 
     Best: <tspan class="stat-val">16d</tspan>
   </text>
 
-  <!-- Labels -->
-  <text x="18" y="72" class="lbl">Mon</text><text x="18" y="102" class="lbl">Wed</text><text x="18" y="132" class="lbl">Fri</text>
+  <line x1="0" y1="38" width="910" x2="910" y2="38" stroke="#21263d" stroke-width="1" />
 
-  <!-- Contribution Grid -->
+  <!-- Day Labels -->
+  <text x="22" y="79" class="lbl">Mon</text><text x="22" y="110" class="lbl">Wed</text><text x="22" y="141" class="lbl">Fri</text>
+
+  <!-- Grid -->
   <g>
-    <rect class="box" x="35" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.0s;" />
-    <rect class="box" x="35" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.02s;" />
-    <rect class="box" x="35" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.04s;" />
-    <rect class="box" x="35" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.06s;" />
-    <rect class="box" x="35" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.08s;" />
-    <rect class="box" x="35" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.1s;" />
-    <rect class="box" x="35" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.12s;" />
-    <rect class="box" x="50" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.015s;" />
-    <rect class="box" x="50" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.035s;" />
-    <rect class="box" x="50" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.055s;" />
-    <rect class="box" x="50" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.075s;" />
-    <rect class="box" x="50" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.095s;" />
-    <rect class="box" x="50" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.115s;" />
-    <rect class="box" x="50" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.135s;" />
-    <rect class="box" x="65" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.03s;" />
-    <rect class="box" x="65" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.05s;" />
-    <rect class="box" x="65" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.07s;" />
-    <rect class="box" x="65" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.09s;" />
-    <rect class="box" x="65" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.11s;" />
-    <rect class="box" x="65" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.13s;" />
-    <rect class="box" x="65" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.15s;" />
-    <rect class="box" x="80" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.045s;" />
-    <rect class="box" x="80" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.065s;" />
-    <rect class="box" x="80" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.085s;" />
-    <rect class="box" x="80" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.105s;" />
-    <rect class="box" x="80" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.125s;" />
-    <rect class="box" x="80" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.145s;" />
-    <rect class="box" x="80" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.165s;" />
-    <rect class="box" x="95" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.06s;" />
-    <rect class="box" x="95" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.08s;" />
-    <rect class="box" x="95" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.1s;" />
-    <rect class="box" x="95" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.12s;" />
-    <rect class="box" x="95" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.14s;" />
-    <rect class="box" x="95" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.16s;" />
-    <rect class="box" x="95" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.18s;" />
-    <rect class="box" x="110" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.075s;" />
-    <rect class="box" x="110" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.095s;" />
-    <rect class="box" x="110" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.115s;" />
-    <rect class="box" x="110" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.135s;" />
-    <rect class="box" x="110" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.155s;" />
-    <rect class="box" x="110" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.175s;" />
-    <rect class="box" x="110" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.195s;" />
-    <rect class="box" x="125" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.09s;" />
-    <rect class="box" x="125" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.11s;" />
-    <rect class="box" x="125" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.13s;" />
-    <rect class="box" x="125" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.15s;" />
-    <rect class="box" x="125" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.17s;" />
-    <rect class="box" x="125" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.19s;" />
-    <rect class="box" x="125" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.21s;" />
-    <rect class="box" x="140" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.105s;" />
-    <rect class="box" x="140" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.125s;" />
-    <rect class="box" x="140" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.145s;" />
-    <rect class="box" x="140" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.165s;" />
-    <rect class="box" x="140" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.185s;" />
-    <rect class="box" x="140" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.205s;" />
-    <rect class="box" x="140" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.225s;" />
-    <rect class="box" x="155" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.12s;" />
-    <rect class="box" x="155" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.14s;" />
-    <rect class="box" x="155" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.16s;" />
-    <rect class="box" x="155" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.18s;" />
-    <rect class="box" x="155" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.2s;" />
-    <rect class="box" x="155" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.22s;" />
-    <rect class="box" x="155" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.24s;" />
-    <rect class="box" x="170" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.135s;" />
-    <rect class="box" x="170" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.155s;" />
-    <rect class="box" x="170" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.175s;" />
-    <rect class="box" x="170" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.195s;" />
-    <rect class="box" x="170" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.215s;" />
-    <rect class="box" x="170" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.235s;" />
-    <rect class="box" x="170" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.255s;" />
-    <rect class="box" x="185" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.15s;" />
-    <rect class="box" x="185" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.17s;" />
-    <rect class="box" x="185" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.19s;" />
-    <rect class="box" x="185" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.21s;" />
-    <rect class="box" x="185" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.23s;" />
-    <rect class="box" x="185" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.25s;" />
-    <rect class="box" x="185" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.27s;" />
-    <rect class="box" x="200" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.165s;" />
-    <rect class="box" x="200" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.185s;" />
-    <rect class="box" x="200" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.205s;" />
-    <rect class="box" x="200" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.225s;" />
-    <rect class="box" x="200" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.245s;" />
-    <rect class="box" x="200" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.265s;" />
-    <rect class="box" x="200" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.285s;" />
-    <rect class="box" x="215" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.18s;" />
-    <rect class="box" x="215" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.2s;" />
-    <rect class="box" x="215" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.22s;" />
-    <rect class="box" x="215" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.24s;" />
-    <rect class="box" x="215" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.26s;" />
-    <rect class="box" x="215" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.28s;" />
-    <rect class="box" x="215" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.3s;" />
-    <rect class="box" x="230" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.195s;" />
-    <rect class="box" x="230" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.215s;" />
-    <rect class="box" x="230" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.235s;" />
-    <rect class="box" x="230" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.255s;" />
-    <rect class="box" x="230" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.275s;" />
-    <rect class="box" x="230" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.295s;" />
-    <rect class="box" x="230" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.315s;" />
-    <rect class="box" x="245" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.21s;" />
-    <rect class="box" x="245" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.23s;" />
-    <rect class="box" x="245" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.25s;" />
-    <rect class="box" x="245" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.27s;" />
-    <rect class="box" x="245" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.29s;" />
-    <rect class="box" x="245" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.31s;" />
-    <rect class="box" x="245" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.33s;" />
-    <rect class="box" x="260" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.225s;" />
-    <rect class="box" x="260" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.245s;" />
-    <rect class="box" x="260" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.265s;" />
-    <rect class="box" x="260" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.285s;" />
-    <rect class="box" x="260" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.305s;" />
-    <rect class="box" x="260" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.325s;" />
-    <rect class="box" x="260" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.345s;" />
-    <rect class="box" x="275" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.24s;" />
-    <rect class="box" x="275" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.26s;" />
-    <rect class="box" x="275" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.28s;" />
-    <rect class="box" x="275" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.3s;" />
-    <rect class="box" x="275" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.32s;" />
-    <rect class="box" x="275" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.34s;" />
-    <rect class="box" x="275" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.36s;" />
-    <rect class="box" x="290" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.255s;" />
-    <rect class="box" x="290" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.275s;" />
-    <rect class="box" x="290" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.295s;" />
-    <rect class="box" x="290" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.315s;" />
-    <rect class="box" x="290" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.335s;" />
-    <rect class="box" x="290" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.355s;" />
-    <rect class="box" x="290" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.375s;" />
-    <rect class="box" x="305" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.27s;" />
-    <rect class="box" x="305" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.29s;" />
-    <rect class="box" x="305" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.31s;" />
-    <rect class="box" x="305" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.33s;" />
-    <rect class="box" x="305" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.35s;" />
-    <rect class="box" x="305" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.37s;" />
-    <rect class="box" x="305" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.39s;" />
-    <rect class="box" x="320" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.285s;" />
-    <rect class="box" x="320" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.305s;" />
-    <rect class="box" x="320" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.325s;" />
-    <rect class="box" x="320" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.345s;" />
-    <rect class="box" x="320" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.365s;" />
-    <rect class="box" x="320" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.385s;" />
-    <rect class="box" x="320" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.405s;" />
-    <rect class="box" x="335" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.3s;" />
-    <rect class="box" x="335" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.32s;" />
-    <rect class="box" x="335" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.34s;" />
-    <rect class="box" x="335" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.36s;" />
-    <rect class="box" x="335" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.38s;" />
-    <rect class="box" x="335" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.4s;" />
-    <rect class="box" x="335" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.42s;" />
-    <rect class="box" x="350" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.315s;" />
-    <rect class="box" x="350" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.335s;" />
-    <rect class="box" x="350" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.355s;" />
-    <rect class="box" x="350" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.375s;" />
-    <rect class="box" x="350" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.395s;" />
-    <rect class="box" x="350" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.415s;" />
-    <rect class="box" x="350" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.435s;" />
-    <rect class="box" x="365" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.33s;" />
-    <rect class="box" x="365" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.35s;" />
-    <rect class="box" x="365" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.37s;" />
-    <rect class="box" x="365" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.39s;" />
-    <rect class="box" x="365" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.41s;" />
-    <rect class="box" x="365" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.43s;" />
-    <rect class="box" x="365" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.45s;" />
-    <rect class="box" x="380" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.345s;" />
-    <rect class="box" x="380" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.365s;" />
-    <rect class="box" x="380" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.385s;" />
-    <rect class="box" x="380" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.405s;" />
-    <rect class="box" x="380" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.425s;" />
-    <rect class="box" x="380" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.445s;" />
-    <rect class="box" x="380" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.465s;" />
-    <rect class="box" x="395" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.36s;" />
-    <rect class="box" x="395" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.38s;" />
-    <rect class="box" x="395" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.4s;" />
-    <rect class="box" x="395" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.42s;" />
-    <rect class="box" x="395" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.44s;" />
-    <rect class="box" x="395" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.46s;" />
-    <rect class="box" x="395" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.48s;" />
-    <rect class="box" x="410" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.375s;" />
-    <rect class="box" x="410" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.395s;" />
-    <rect class="box" x="410" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.415s;" />
-    <rect class="box" x="410" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.435s;" />
-    <rect class="box" x="410" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.455s;" />
-    <rect class="box" x="410" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.475s;" />
-    <rect class="box" x="410" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.495s;" />
-    <rect class="box" x="425" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.39s;" />
-    <rect class="box" x="425" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.41s;" />
-    <rect class="box" x="425" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.43s;" />
-    <rect class="box" x="425" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.45s;" />
-    <rect class="box" x="425" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.47s;" />
-    <rect class="box" x="425" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.49s;" />
-    <rect class="box" x="425" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.51s;" />
-    <rect class="box" x="440" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.405s;" />
-    <rect class="box" x="440" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.425s;" />
-    <rect class="box" x="440" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.445s;" />
-    <rect class="box" x="440" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.465s;" />
-    <rect class="box" x="440" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.485s;" />
-    <rect class="box" x="440" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.505s;" />
-    <rect class="box" x="440" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.525s;" />
-    <rect class="box" x="455" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.42s;" />
-    <rect class="box" x="455" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.44s;" />
-    <rect class="box" x="455" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.46s;" />
-    <rect class="box" x="455" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.48s;" />
-    <rect class="box" x="455" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.5s;" />
-    <rect class="box" x="455" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.52s;" />
-    <rect class="box" x="455" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.54s;" />
-    <rect class="box" x="470" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.435s;" />
-    <rect class="box" x="470" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.455s;" />
-    <rect class="box" x="470" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.475s;" />
-    <rect class="box" x="470" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.495s;" />
-    <rect class="box" x="470" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.515s;" />
-    <rect class="box" x="470" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.535s;" />
-    <rect class="box" x="470" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.555s;" />
-    <rect class="box" x="485" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.45s;" />
-    <rect class="box" x="485" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.47s;" />
-    <rect class="box" x="485" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.49s;" />
-    <rect class="box" x="485" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.51s;" />
-    <rect class="box" x="485" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.53s;" />
-    <rect class="box" x="485" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.55s;" />
-    <rect class="box" x="485" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.57s;" />
-    <rect class="box" x="500" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.465s;" />
-    <rect class="box" x="500" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.485s;" />
-    <rect class="box" x="500" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.505s;" />
-    <rect class="box" x="500" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.525s;" />
-    <rect class="box" x="500" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.545s;" />
-    <rect class="box" x="500" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.565s;" />
-    <rect class="box" x="500" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.585s;" />
-    <rect class="box" x="515" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.48s;" />
-    <rect class="box" x="515" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.5s;" />
-    <rect class="box" x="515" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.52s;" />
-    <rect class="box" x="515" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.54s;" />
-    <rect class="box" x="515" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.56s;" />
-    <rect class="box" x="515" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.58s;" />
-    <rect class="box" x="515" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.6s;" />
-    <rect class="box" x="530" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.495s;" />
-    <rect class="box" x="530" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.515s;" />
-    <rect class="box" x="530" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.535s;" />
-    <rect class="box" x="530" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.555s;" />
-    <rect class="box" x="530" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.575s;" />
-    <rect class="box" x="530" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.595s;" />
-    <rect class="box" x="530" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.615s;" />
-    <rect class="box" x="545" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.51s;" />
-    <rect class="box" x="545" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.53s;" />
-    <rect class="box" x="545" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.55s;" />
-    <rect class="box" x="545" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.57s;" />
-    <rect class="box" x="545" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.59s;" />
-    <rect class="box" x="545" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.61s;" />
-    <rect class="box" x="545" y="135" width="11" height="11" rx="2" ry="2" fill="#26a641" style="animation-delay: 0.63s;" />
-    <rect class="box" x="560" y="45" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.525s;" />
-    <rect class="box" x="560" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.545s;" />
-    <rect class="box" x="560" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.565s;" />
-    <rect class="box" x="560" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.585s;" />
-    <rect class="box" x="560" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.605s;" />
-    <rect class="box" x="560" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.625s;" />
-    <rect class="box" x="560" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.645s;" />
-    <rect class="box" x="575" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.54s;" />
-    <rect class="box" x="575" y="60" width="11" height="11" rx="2" ry="2" fill="#39d353" style="animation-delay: 0.56s;" />
-    <rect class="box" x="575" y="75" width="11" height="11" rx="2" ry="2" fill="#26a641" style="animation-delay: 0.58s;" />
-    <rect class="box" x="575" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.6s;" />
-    <rect class="box" x="575" y="105" width="11" height="11" rx="2" ry="2" fill="#39d353" style="animation-delay: 0.62s;" />
-    <rect class="box" x="575" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.64s;" />
-    <rect class="box" x="575" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.66s;" />
-    <rect class="box" x="590" y="45" width="11" height="11" rx="2" ry="2" fill="#39d353" style="animation-delay: 0.555s;" />
-    <rect class="box" x="590" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.575s;" />
-    <rect class="box" x="590" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.595s;" />
-    <rect class="box" x="590" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.615s;" />
-    <rect class="box" x="590" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.635s;" />
-    <rect class="box" x="590" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.655s;" />
-    <rect class="box" x="590" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.675s;" />
-    <rect class="box" x="605" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.57s;" />
-    <rect class="box" x="605" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.59s;" />
-    <rect class="box" x="605" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.61s;" />
-    <rect class="box" x="605" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.63s;" />
-    <rect class="box" x="605" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.65s;" />
-    <rect class="box" x="605" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.67s;" />
-    <rect class="box" x="605" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.69s;" />
-    <rect class="box" x="620" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.585s;" />
-    <rect class="box" x="620" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.605s;" />
-    <rect class="box" x="620" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.625s;" />
-    <rect class="box" x="620" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.645s;" />
-    <rect class="box" x="620" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.665s;" />
-    <rect class="box" x="620" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.685s;" />
-    <rect class="box" x="620" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.705s;" />
-    <rect class="box" x="635" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.6s;" />
-    <rect class="box" x="635" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.62s;" />
-    <rect class="box" x="635" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.64s;" />
-    <rect class="box" x="635" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.66s;" />
-    <rect class="box" x="635" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.68s;" />
-    <rect class="box" x="635" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.7s;" />
-    <rect class="box" x="635" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.72s;" />
-    <rect class="box" x="650" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.615s;" />
-    <rect class="box" x="650" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.635s;" />
-    <rect class="box" x="650" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.655s;" />
-    <rect class="box" x="650" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.675s;" />
-    <rect class="box" x="650" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.695s;" />
-    <rect class="box" x="650" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.715s;" />
-    <rect class="box" x="650" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.735s;" />
-    <rect class="box" x="665" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.63s;" />
-    <rect class="box" x="665" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.65s;" />
-    <rect class="box" x="665" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.67s;" />
-    <rect class="box" x="665" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.69s;" />
-    <rect class="box" x="665" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.71s;" />
-    <rect class="box" x="665" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.73s;" />
-    <rect class="box" x="665" y="135" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.75s;" />
-    <rect class="box" x="680" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.645s;" />
-    <rect class="box" x="680" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.665s;" />
-    <rect class="box" x="680" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.685s;" />
-    <rect class="box" x="680" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.705s;" />
-    <rect class="box" x="680" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.725s;" />
-    <rect class="box" x="680" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.745s;" />
-    <rect class="box" x="680" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.765s;" />
-    <rect class="box" x="695" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.66s;" />
-    <rect class="box" x="695" y="60" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.68s;" />
-    <rect class="box" x="695" y="75" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.7s;" />
-    <rect class="box" x="695" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.72s;" />
-    <rect class="box" x="695" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.74s;" />
-    <rect class="box" x="695" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.76s;" />
-    <rect class="box" x="695" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.78s;" />
-    <rect class="box" x="710" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.675s;" />
-    <rect class="box" x="710" y="60" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.695s;" />
-    <rect class="box" x="710" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.715s;" />
-    <rect class="box" x="710" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.735s;" />
-    <rect class="box" x="710" y="105" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.755s;" />
-    <rect class="box" x="710" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.775s;" />
-    <rect class="box" x="710" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.795s;" />
-    <rect class="box" x="725" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.69s;" />
-    <rect class="box" x="725" y="60" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.71s;" />
-    <rect class="box" x="725" y="75" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.73s;" />
-    <rect class="box" x="725" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.75s;" />
-    <rect class="box" x="725" y="105" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.77s;" />
-    <rect class="box" x="725" y="120" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.79s;" />
-    <rect class="box" x="725" y="135" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.81s;" />
-    <rect class="box" x="740" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.705s;" />
-    <rect class="box" x="740" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.725s;" />
-    <rect class="box" x="740" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.745s;" />
-    <rect class="box" x="740" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.765s;" />
-    <rect class="box" x="740" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.785s;" />
-    <rect class="box" x="740" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.805s;" />
-    <rect class="box" x="740" y="135" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.825s;" />
-    <rect class="box" x="755" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.72s;" />
-    <rect class="box" x="755" y="60" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.74s;" />
-    <rect class="box" x="755" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.76s;" />
-    <rect class="box" x="755" y="90" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.78s;" />
-    <rect class="box" x="755" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.8s;" />
-    <rect class="box" x="755" y="120" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.82s;" />
-    <rect class="box" x="755" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.84s;" />
-    <rect class="box" x="770" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.735s;" />
-    <rect class="box" x="770" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.755s;" />
-    <rect class="box" x="770" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.775s;" />
-    <rect class="box" x="770" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.795s;" />
-    <rect class="box" x="770" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.815s;" />
-    <rect class="box" x="770" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.835s;" />
-    <rect class="box" x="770" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.855s;" />
-    <rect class="box" x="785" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.75s;" />
-    <rect class="box" x="785" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.77s;" />
-    <rect class="box" x="785" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.79s;" />
-    <rect class="box" x="785" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.81s;" />
-    <rect class="box" x="785" y="105" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.83s;" />
-    <rect class="box" x="785" y="120" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.85s;" />
-    <rect class="box" x="785" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.87s;" />
-    <rect class="box" x="800" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.765s;" />
-    <rect class="box" x="800" y="60" width="11" height="11" rx="2" ry="2" fill="#006d32" style="animation-delay: 0.785s;" />
-    <rect class="box" x="800" y="75" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.805s;" />
-    <rect class="box" x="800" y="90" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.825s;" />
-    <rect class="box" x="800" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.845s;" />
-    <rect class="box" x="800" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.865s;" />
-    <rect class="box" x="800" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.885s;" />
-    <rect class="box" x="815" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.78s;" />
+    <rect class="box" x="42" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.0s;" />
+    <rect class="box" x="42" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.015s;" />
+    <rect class="box" x="42" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.03s;" />
+    <rect class="box" x="42" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.045s;" />
+    <rect class="box" x="42" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.06s;" />
+    <rect class="box" x="42" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.075s;" />
+    <rect class="box" x="42" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.09s;" />
+    <rect class="box" x="57" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.012s;" />
+    <rect class="box" x="57" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.027s;" />
+    <rect class="box" x="57" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.042s;" />
+    <rect class="box" x="57" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.057s;" />
+    <rect class="box" x="57" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.072s;" />
+    <rect class="box" x="57" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.087s;" />
+    <rect class="box" x="57" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.102s;" />
+    <rect class="box" x="72" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.024s;" />
+    <rect class="box" x="72" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.039s;" />
+    <rect class="box" x="72" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.054s;" />
+    <rect class="box" x="72" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.069s;" />
+    <rect class="box" x="72" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.084s;" />
+    <rect class="box" x="72" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.099s;" />
+    <rect class="box" x="72" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.114s;" />
+    <rect class="box" x="87" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.036s;" />
+    <rect class="box" x="87" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.051s;" />
+    <rect class="box" x="87" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.066s;" />
+    <rect class="box" x="87" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.081s;" />
+    <rect class="box" x="87" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.096s;" />
+    <rect class="box" x="87" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.111s;" />
+    <rect class="box" x="87" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.126s;" />
+    <rect class="box" x="102" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.048s;" />
+    <rect class="box" x="102" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.063s;" />
+    <rect class="box" x="102" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.078s;" />
+    <rect class="box" x="102" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.093s;" />
+    <rect class="box" x="102" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.108s;" />
+    <rect class="box" x="102" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.123s;" />
+    <rect class="box" x="102" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.138s;" />
+    <rect class="box" x="117" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.06s;" />
+    <rect class="box" x="117" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.075s;" />
+    <rect class="box" x="117" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.09s;" />
+    <rect class="box" x="117" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.105s;" />
+    <rect class="box" x="117" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.12s;" />
+    <rect class="box" x="117" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.135s;" />
+    <rect class="box" x="117" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.15s;" />
+    <rect class="box" x="132" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.072s;" />
+    <rect class="box" x="132" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.087s;" />
+    <rect class="box" x="132" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.102s;" />
+    <rect class="box" x="132" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.117s;" />
+    <rect class="box" x="132" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.132s;" />
+    <rect class="box" x="132" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.147s;" />
+    <rect class="box" x="132" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.162s;" />
+    <rect class="box" x="147" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.084s;" />
+    <rect class="box" x="147" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.099s;" />
+    <rect class="box" x="147" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.114s;" />
+    <rect class="box" x="147" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.129s;" />
+    <rect class="box" x="147" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.144s;" />
+    <rect class="box" x="147" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.159s;" />
+    <rect class="box" x="147" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.174s;" />
+    <rect class="box" x="162" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.096s;" />
+    <rect class="box" x="162" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.111s;" />
+    <rect class="box" x="162" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.126s;" />
+    <rect class="box" x="162" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.141s;" />
+    <rect class="box" x="162" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.156s;" />
+    <rect class="box" x="162" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.171s;" />
+    <rect class="box" x="162" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.186s;" />
+    <rect class="box" x="177" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.108s;" />
+    <rect class="box" x="177" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.123s;" />
+    <rect class="box" x="177" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.138s;" />
+    <rect class="box" x="177" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.153s;" />
+    <rect class="box" x="177" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.168s;" />
+    <rect class="box" x="177" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.183s;" />
+    <rect class="box" x="177" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.198s;" />
+    <rect class="box" x="192" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.12s;" />
+    <rect class="box" x="192" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.135s;" />
+    <rect class="box" x="192" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.15s;" />
+    <rect class="box" x="192" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.165s;" />
+    <rect class="box" x="192" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.18s;" />
+    <rect class="box" x="192" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.195s;" />
+    <rect class="box" x="192" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.21s;" />
+    <rect class="box" x="207" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.132s;" />
+    <rect class="box" x="207" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.147s;" />
+    <rect class="box" x="207" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.162s;" />
+    <rect class="box" x="207" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.177s;" />
+    <rect class="box" x="207" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.192s;" />
+    <rect class="box" x="207" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.207s;" />
+    <rect class="box" x="207" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.222s;" />
+    <rect class="box" x="222" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.144s;" />
+    <rect class="box" x="222" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.159s;" />
+    <rect class="box" x="222" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.174s;" />
+    <rect class="box" x="222" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.189s;" />
+    <rect class="box" x="222" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.204s;" />
+    <rect class="box" x="222" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.219s;" />
+    <rect class="box" x="222" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.234s;" />
+    <rect class="box" x="237" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.156s;" />
+    <rect class="box" x="237" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.171s;" />
+    <rect class="box" x="237" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.186s;" />
+    <rect class="box" x="237" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.201s;" />
+    <rect class="box" x="237" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.216s;" />
+    <rect class="box" x="237" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.231s;" />
+    <rect class="box" x="237" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.246s;" />
+    <rect class="box" x="252" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.168s;" />
+    <rect class="box" x="252" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.183s;" />
+    <rect class="box" x="252" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.198s;" />
+    <rect class="box" x="252" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.213s;" />
+    <rect class="box" x="252" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.228s;" />
+    <rect class="box" x="252" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.243s;" />
+    <rect class="box" x="252" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.258s;" />
+    <rect class="box" x="267" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.18s;" />
+    <rect class="box" x="267" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.195s;" />
+    <rect class="box" x="267" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.21s;" />
+    <rect class="box" x="267" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.225s;" />
+    <rect class="box" x="267" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.24s;" />
+    <rect class="box" x="267" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.255s;" />
+    <rect class="box" x="267" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.27s;" />
+    <rect class="box" x="282" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.192s;" />
+    <rect class="box" x="282" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.207s;" />
+    <rect class="box" x="282" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.222s;" />
+    <rect class="box" x="282" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.237s;" />
+    <rect class="box" x="282" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.252s;" />
+    <rect class="box" x="282" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.267s;" />
+    <rect class="box" x="282" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.282s;" />
+    <rect class="box" x="297" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.204s;" />
+    <rect class="box" x="297" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.219s;" />
+    <rect class="box" x="297" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.234s;" />
+    <rect class="box" x="297" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.249s;" />
+    <rect class="box" x="297" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.264s;" />
+    <rect class="box" x="297" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.279s;" />
+    <rect class="box" x="297" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.294s;" />
+    <rect class="box" x="312" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.216s;" />
+    <rect class="box" x="312" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.231s;" />
+    <rect class="box" x="312" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.246s;" />
+    <rect class="box" x="312" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.261s;" />
+    <rect class="box" x="312" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.276s;" />
+    <rect class="box" x="312" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.291s;" />
+    <rect class="box" x="312" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.306s;" />
+    <rect class="box" x="327" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.228s;" />
+    <rect class="box" x="327" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.243s;" />
+    <rect class="box" x="327" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.258s;" />
+    <rect class="box" x="327" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.273s;" />
+    <rect class="box" x="327" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.288s;" />
+    <rect class="box" x="327" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.303s;" />
+    <rect class="box" x="327" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.318s;" />
+    <rect class="box" x="342" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.24s;" />
+    <rect class="box" x="342" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.255s;" />
+    <rect class="box" x="342" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.27s;" />
+    <rect class="box" x="342" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.285s;" />
+    <rect class="box" x="342" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.3s;" />
+    <rect class="box" x="342" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.315s;" />
+    <rect class="box" x="342" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.33s;" />
+    <rect class="box" x="357" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.252s;" />
+    <rect class="box" x="357" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.267s;" />
+    <rect class="box" x="357" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.282s;" />
+    <rect class="box" x="357" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.297s;" />
+    <rect class="box" x="357" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.312s;" />
+    <rect class="box" x="357" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.327s;" />
+    <rect class="box" x="357" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.342s;" />
+    <rect class="box" x="372" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.264s;" />
+    <rect class="box" x="372" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.279s;" />
+    <rect class="box" x="372" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.294s;" />
+    <rect class="box" x="372" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.309s;" />
+    <rect class="box" x="372" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.324s;" />
+    <rect class="box" x="372" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.339s;" />
+    <rect class="box" x="372" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.354s;" />
+    <rect class="box" x="387" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.276s;" />
+    <rect class="box" x="387" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.291s;" />
+    <rect class="box" x="387" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.306s;" />
+    <rect class="box" x="387" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.321s;" />
+    <rect class="box" x="387" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.336s;" />
+    <rect class="box" x="387" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.351s;" />
+    <rect class="box" x="387" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.366s;" />
+    <rect class="box" x="402" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.288s;" />
+    <rect class="box" x="402" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.303s;" />
+    <rect class="box" x="402" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.318s;" />
+    <rect class="box" x="402" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.333s;" />
+    <rect class="box" x="402" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.348s;" />
+    <rect class="box" x="402" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.363s;" />
+    <rect class="box" x="402" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.378s;" />
+    <rect class="box" x="417" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.3s;" />
+    <rect class="box" x="417" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.315s;" />
+    <rect class="box" x="417" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.33s;" />
+    <rect class="box" x="417" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.345s;" />
+    <rect class="box" x="417" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.36s;" />
+    <rect class="box" x="417" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.375s;" />
+    <rect class="box" x="417" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.39s;" />
+    <rect class="box" x="432" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.312s;" />
+    <rect class="box" x="432" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.327s;" />
+    <rect class="box" x="432" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.342s;" />
+    <rect class="box" x="432" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.357s;" />
+    <rect class="box" x="432" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.372s;" />
+    <rect class="box" x="432" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.387s;" />
+    <rect class="box" x="432" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.402s;" />
+    <rect class="box" x="447" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.324s;" />
+    <rect class="box" x="447" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.339s;" />
+    <rect class="box" x="447" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.354s;" />
+    <rect class="box" x="447" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.369s;" />
+    <rect class="box" x="447" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.384s;" />
+    <rect class="box" x="447" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.399s;" />
+    <rect class="box" x="447" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.414s;" />
+    <rect class="box" x="462" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.336s;" />
+    <rect class="box" x="462" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.351s;" />
+    <rect class="box" x="462" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.366s;" />
+    <rect class="box" x="462" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.381s;" />
+    <rect class="box" x="462" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.396s;" />
+    <rect class="box" x="462" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.411s;" />
+    <rect class="box" x="462" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.426s;" />
+    <rect class="box" x="477" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.348s;" />
+    <rect class="box" x="477" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.363s;" />
+    <rect class="box" x="477" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.378s;" />
+    <rect class="box" x="477" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.393s;" />
+    <rect class="box" x="477" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.408s;" />
+    <rect class="box" x="477" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.423s;" />
+    <rect class="box" x="477" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.438s;" />
+    <rect class="box" x="492" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.36s;" />
+    <rect class="box" x="492" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.375s;" />
+    <rect class="box" x="492" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.39s;" />
+    <rect class="box" x="492" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.405s;" />
+    <rect class="box" x="492" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.42s;" />
+    <rect class="box" x="492" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.435s;" />
+    <rect class="box" x="492" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.45s;" />
+    <rect class="box" x="507" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.372s;" />
+    <rect class="box" x="507" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.387s;" />
+    <rect class="box" x="507" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.402s;" />
+    <rect class="box" x="507" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.417s;" />
+    <rect class="box" x="507" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.432s;" />
+    <rect class="box" x="507" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.447s;" />
+    <rect class="box" x="507" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.462s;" />
+    <rect class="box" x="522" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.384s;" />
+    <rect class="box" x="522" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.399s;" />
+    <rect class="box" x="522" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.414s;" />
+    <rect class="box" x="522" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.429s;" />
+    <rect class="box" x="522" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.444s;" />
+    <rect class="box" x="522" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.459s;" />
+    <rect class="box" x="522" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.474s;" />
+    <rect class="box" x="537" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.396s;" />
+    <rect class="box" x="537" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.411s;" />
+    <rect class="box" x="537" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.426s;" />
+    <rect class="box" x="537" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.441s;" />
+    <rect class="box" x="537" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.456s;" />
+    <rect class="box" x="537" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.471s;" />
+    <rect class="box" x="537" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.486s;" />
+    <rect class="box" x="552" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.408s;" />
+    <rect class="box" x="552" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.423s;" />
+    <rect class="box" x="552" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.438s;" />
+    <rect class="box" x="552" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.453s;" />
+    <rect class="box" x="552" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.468s;" />
+    <rect class="box" x="552" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.483s;" />
+    <rect class="box" x="552" y="142" width="11" height="11" rx="2" ry="2" fill="#00e676" style="animation-delay: 0.498s;" />
+    <rect class="box" x="567" y="52" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.42s;" />
+    <rect class="box" x="567" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.435s;" />
+    <rect class="box" x="567" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.45s;" />
+    <rect class="box" x="567" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.465s;" />
+    <rect class="box" x="567" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.48s;" />
+    <rect class="box" x="567" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.495s;" />
+    <rect class="box" x="567" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.51s;" />
+    <rect class="box" x="582" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.432s;" />
+    <rect class="box pulse" x="582" y="67" width="11" height="11" rx="2" ry="2" fill="#00e5ff" style="animation-delay: 0.447s;" />
+    <rect class="box" x="582" y="82" width="11" height="11" rx="2" ry="2" fill="#00e676" style="animation-delay: 0.462s;" />
+    <rect class="box" x="582" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.477s;" />
+    <rect class="box pulse" x="582" y="112" width="11" height="11" rx="2" ry="2" fill="#00e5ff" style="animation-delay: 0.492s;" />
+    <rect class="box" x="582" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.507s;" />
+    <rect class="box" x="582" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.522s;" />
+    <rect class="box pulse" x="597" y="52" width="11" height="11" rx="2" ry="2" fill="#00e5ff" style="animation-delay: 0.444s;" />
+    <rect class="box" x="597" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.459s;" />
+    <rect class="box" x="597" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.474s;" />
+    <rect class="box" x="597" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.489s;" />
+    <rect class="box" x="597" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.504s;" />
+    <rect class="box" x="597" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.519s;" />
+    <rect class="box" x="597" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.534s;" />
+    <rect class="box" x="612" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.456s;" />
+    <rect class="box" x="612" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.471s;" />
+    <rect class="box" x="612" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.486s;" />
+    <rect class="box" x="612" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.501s;" />
+    <rect class="box" x="612" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.516s;" />
+    <rect class="box" x="612" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.531s;" />
+    <rect class="box" x="612" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.546s;" />
+    <rect class="box" x="627" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.468s;" />
+    <rect class="box" x="627" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.483s;" />
+    <rect class="box" x="627" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.498s;" />
+    <rect class="box" x="627" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.513s;" />
+    <rect class="box" x="627" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.528s;" />
+    <rect class="box" x="627" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.543s;" />
+    <rect class="box" x="627" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.558s;" />
+    <rect class="box" x="642" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.48s;" />
+    <rect class="box" x="642" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.495s;" />
+    <rect class="box" x="642" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.51s;" />
+    <rect class="box" x="642" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.525s;" />
+    <rect class="box" x="642" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.54s;" />
+    <rect class="box" x="642" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.555s;" />
+    <rect class="box" x="642" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.57s;" />
+    <rect class="box" x="657" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.492s;" />
+    <rect class="box" x="657" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.507s;" />
+    <rect class="box" x="657" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.522s;" />
+    <rect class="box" x="657" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.537s;" />
+    <rect class="box" x="657" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.552s;" />
+    <rect class="box" x="657" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.567s;" />
+    <rect class="box" x="657" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.582s;" />
+    <rect class="box" x="672" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.504s;" />
+    <rect class="box" x="672" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.519s;" />
+    <rect class="box" x="672" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.534s;" />
+    <rect class="box" x="672" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.549s;" />
+    <rect class="box" x="672" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.564s;" />
+    <rect class="box" x="672" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.579s;" />
+    <rect class="box" x="672" y="142" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.594s;" />
+    <rect class="box" x="687" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.516s;" />
+    <rect class="box" x="687" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.531s;" />
+    <rect class="box" x="687" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.546s;" />
+    <rect class="box" x="687" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.561s;" />
+    <rect class="box" x="687" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.576s;" />
+    <rect class="box" x="687" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.591s;" />
+    <rect class="box" x="687" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.606s;" />
+    <rect class="box" x="702" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.528s;" />
+    <rect class="box" x="702" y="67" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.543s;" />
+    <rect class="box" x="702" y="82" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.558s;" />
+    <rect class="box" x="702" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.573s;" />
+    <rect class="box" x="702" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.588s;" />
+    <rect class="box" x="702" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.603s;" />
+    <rect class="box" x="702" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.618s;" />
+    <rect class="box" x="717" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.54s;" />
+    <rect class="box" x="717" y="67" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.555s;" />
+    <rect class="box" x="717" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.57s;" />
+    <rect class="box" x="717" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.585s;" />
+    <rect class="box" x="717" y="112" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.6s;" />
+    <rect class="box" x="717" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.615s;" />
+    <rect class="box" x="717" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.63s;" />
+    <rect class="box" x="732" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.552s;" />
+    <rect class="box" x="732" y="67" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.567s;" />
+    <rect class="box" x="732" y="82" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.582s;" />
+    <rect class="box" x="732" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.597s;" />
+    <rect class="box" x="732" y="112" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.612s;" />
+    <rect class="box" x="732" y="127" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.627s;" />
+    <rect class="box" x="732" y="142" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.642s;" />
+    <rect class="box" x="747" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.564s;" />
+    <rect class="box" x="747" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.579s;" />
+    <rect class="box" x="747" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.594s;" />
+    <rect class="box" x="747" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.609s;" />
+    <rect class="box" x="747" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.624s;" />
+    <rect class="box" x="747" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.639s;" />
+    <rect class="box" x="747" y="142" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.654s;" />
+    <rect class="box" x="762" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.576s;" />
+    <rect class="box" x="762" y="67" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.591s;" />
+    <rect class="box" x="762" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.606s;" />
+    <rect class="box" x="762" y="97" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.621s;" />
+    <rect class="box" x="762" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.636s;" />
+    <rect class="box" x="762" y="127" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.651s;" />
+    <rect class="box" x="762" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.666s;" />
+    <rect class="box" x="777" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.588s;" />
+    <rect class="box" x="777" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.603s;" />
+    <rect class="box" x="777" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.618s;" />
+    <rect class="box" x="777" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.633s;" />
+    <rect class="box" x="777" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.648s;" />
+    <rect class="box" x="777" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.663s;" />
+    <rect class="box" x="777" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.678s;" />
+    <rect class="box" x="792" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.6s;" />
+    <rect class="box" x="792" y="67" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.615s;" />
+    <rect class="box" x="792" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.63s;" />
+    <rect class="box" x="792" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.645s;" />
+    <rect class="box" x="792" y="112" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.66s;" />
+    <rect class="box" x="792" y="127" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.675s;" />
+    <rect class="box" x="792" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.69s;" />
+    <rect class="box" x="807" y="52" width="11" height="11" rx="2" ry="2" fill="#121624" style="animation-delay: 0.612s;" />
+    <rect class="box" x="807" y="67" width="11" height="11" rx="2" ry="2" fill="#00897b" style="animation-delay: 0.627s;" />
+    <rect class="box" x="807" y="82" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.642s;" />
+    <rect class="box" x="807" y="97" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.657s;" />
+    <rect class="box" x="807" y="112" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.672s;" />
+    <rect class="box" x="807" y="127" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.687s;" />
+    <rect class="box" x="807" y="142" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.702s;" />
+    <rect class="box" x="822" y="52" width="11" height="11" rx="2" ry="2" fill="#004d40" style="animation-delay: 0.624s;" />
+  </g>
+
+  <!-- Laser Radar Beam -->
+  <g class="laser-beam">
+    <rect x="42" y="48" width="40" height="110" fill="url(#laser-grad)" />
   </g>
 
   <!-- Legend -->
-  <g transform="translate(710, 137)">
+  <g transform="translate(745, 155)">
     <text x="-32" y="9" class="legend-text">Less</text>
-    <rect x="0" y="0" width="10" height="10" rx="2" fill="#161b22" />
-    <rect x="13" y="0" width="10" height="10" rx="2" fill="#0e4429" />
-    <rect x="26" y="0" width="10" height="10" rx="2" fill="#006d32" />
-    <rect x="39" y="0" width="10" height="10" rx="2" fill="#26a641" />
-    <rect x="52" y="0" width="10" height="10" rx="2" fill="#39d353" />
-    <rect x="65" y="0" width="10" height="10" rx="2" fill="#69f0a0" />
+    <rect x="0" y="0" width="10" height="10" rx="2" fill="#121624" />
+    <rect x="13" y="0" width="10" height="10" rx="2" fill="#004d40" />
+    <rect x="26" y="0" width="10" height="10" rx="2" fill="#00897b" />
+    <rect x="39" y="0" width="10" height="10" rx="2" fill="#00e676" />
+    <rect x="52" y="0" width="10" height="10" rx="2" fill="#00e5ff" />
+    <rect x="65" y="0" width="10" height="10" rx="2" fill="#76ff03" />
     <text x="80" y="9" class="legend-text">More</text>
   </g>
 </svg>
