@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="370" height="280" viewBox="0 0 370 280">
+  <style>
+    .bg { fill: #0d1117; rx: 8px; stroke: #30363d; stroke-width: 1px; }
+    .title-bar { fill: #161b22; rx: 8px; }
+    .title-text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; font-weight: bold; fill: #3fb950; }
+    .art { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #8b949e; white-space: pre; }
+    .ascii-row {
+      opacity: 0;
+      animation: typeRow 0.3s ease-out forwards;
+    }
+    @keyframes typeRow {
+      0% { opacity: 0; transform: translateY(2px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+  <!-- Container -->
+  <rect class="bg" width="370" height="280" />
+
+  <!-- Window Header -->
+  <rect class="title-bar" width="370" height="36" />
+  <circle cx="20" cy="18" r="5" fill="#ff5f56" />
+  <circle cx="36" cy="18" r="5" fill="#ffbd2e" />
+  <circle cx="52" cy="18" r="5" fill="#27c93f" />
+  <text x="72" y="22" class="title-text">terminal --avatar</text>
+
+  <!-- ASCII Content -->
+    <g class="ascii-row" style="animation-delay: 0.05s;">
+      <text x="20" y="65" class="art">   _  ___              ___                  |</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.11s;">
+      <text x="20" y="82" class="art">  / _||__ \   ____    / _ \ _   ____ _  __| |</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.17s;">
+      <text x="20" y="99" class="art"> | (_) / /   / _  |  / /_\ \ \ / / _` |/ _` |</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.23s;">
+      <text x="20" y="116" class="art">  \__, / /_ | (_| | / / _ \ \ V / (_| | (_| |</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.29s;">
+      <text x="20" y="133" class="art">    /_/____| \__,_|/_/   \_\ \_/ \__,_|\__,_|</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.35s;">
+      <text x="20" y="150" class="art">---------------------------------------------</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.41s;">
+      <text x="20" y="167" class="art"> > STATUS  : ACTIVE DEVELOPER</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.47s;">
+      <text x="20" y="184" class="art"> > CODE    : CONSTANT IMPROVEMENT</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.53s;">
+      <text x="20" y="201" class="art"> > MISSION : BUILD USEFUL SOFTWARE</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.59s;">
+      <text x="20" y="218" class="art"> > SYSTEM  : ONLINE & READY</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.65s;">
+      <text x="20" y="235" class="art">---------------------------------------------</text>
+    </g>
+    <g class="ascii-row" style="animation-delay: 0.71s;">
+      <text x="20" y="252" class="art"> [ ################################### ] 100%</text>
+    </g>
+</svg>
