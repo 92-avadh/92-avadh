@@ -1,14 +1,14 @@
 <div align="center">
 
-  <h3><code>andriidrok1@github ~ $ ./contributions.sh</code></h3>
+  <h3><code>92-avadh@github ~ $ ./contributions.sh</code></h3>
   <img src="./contrib-heatmap.svg" width="860" />
 
   <br><br>
 
-  <h3><code>andriidrok1@github ~ $ whoami</code></h3>
+  <h3><code>92-avadh@github ~ $ whoami</code></h3>
   <table>
     <tr>
-      <td valign="top"><img src="./andriidrok1-ascii.svg" width="370" /></td>
+      <td valign="top"><img src="./avadh-ascii.svg" width="370" /></td>
       <td valign="top"><img src="./info-card.svg" width="490" /></td>
     </tr>
   </table>

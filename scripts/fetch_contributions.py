@@ -3,7 +3,7 @@ import re
 import os
 import urllib.request
 
-USERNAME = "andriidrok1"
+USERNAME = "92-avadh"
 URL = f"https://github.com/users/{USERNAME}/contributions"
 
 headers = {
@@ -20,7 +20,6 @@ def fetch():
         print(f"Error fetching URL: {e}")
         html = ""
 
-    # Parse days using regex for ContributionCalendar-day
     day_matches = re.findall(r'class="[^"]*ContributionCalendar-day[^"]*"[^>]*data-date="([^"]+)"[^>]*data-level="(\d+)"', html)
     
     if not day_matches:

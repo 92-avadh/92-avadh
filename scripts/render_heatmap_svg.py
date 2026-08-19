@@ -13,7 +13,7 @@ def render_heatmap():
     total_contributions = data.get("total_contributions", 0)
     current_streak = data.get("current_streak", 0)
     longest_streak = data.get("longest_streak", 0)
-    username = data.get("username", "andriidrok1")
+    username = data.get("username", "92-avadh")
 
     PALETTE = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353", "#69f0a0"]
 

@@ -3,22 +3,22 @@ import os
 def render_info_card():
     width = 490
     height = 280
-    username = "andriidrok1"
+    username = "92-avadh"
 
     details = [
-        ("User", "Andrii Drok (andriidrok1)"),
-        ("Degree", "CS @ San Francisco State University"),
-        ("Stack", "Python, TypeScript, React, FastAPI, Docker"),
-        ("Projects", "autobroll, strategy-checker, compound"),
-        ("Uptime", "24/7 Building & Backtesting"),
-        ("Focus", "AI Video Tools & Quantitative Markets"),
-        ("Status", "🟢 Open for Open-Source & Collabs")
+        ("User", "Avadh (92-avadh)"),
+        ("Degree", "BCA @ SDJIC (VNSGU University)"),
+        ("Stack", "JavaScript, HTML, CSS, React, Node.js"),
+        ("Projects", "Amazon Clone, RPS Game, Auth Pages"),
+        ("Uptime", "24/7 Continuous Learning"),
+        ("Focus", "Full Stack Development & Web Apps"),
+        ("Status", "🟢 Open for Open-Source & Projects")
     ]
 
     skills = [
-        ("Python / FastAPI", 94, "#58a6ff"),
-        ("TypeScript / React", 90, "#3fb950"),
-        ("Three.js & Docker", 85, "#bc8cff")
+        ("JavaScript / Web", 92, "#58a6ff"),
+        ("HTML & CSS", 95, "#3fb950"),
+        ("React / Node.js", 85, "#bc8cff")
     ]
 
     xml_elements = []

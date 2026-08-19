@@ -3,17 +3,18 @@ import os
 def generate_ascii_svg():
     width = 370
     height = 280
-    username = "andriidrok1"
+    username = "92-avadh"
 
     ascii_art_lines = [
-        r"   _   _  _ ___  ___  ____ ___  ___  ___  _  __",
-        r"  /_\ | \| |   \| _ \|_  _|_ _| |   \/ _ \| |/ /",
-        r" / _ \| .` | |) |   /  _|  | |  | |) | (_) | ' < ",
-        r"/_/ \_\_|\_|___/|_|_\___|___| |___/\___/|_|\_\\",
+        r"   _  ___              ___                  |",
+        r"  / _||__ \   ____    / _ \ _   ____ _  __| |",
+        r" | (_) / /   / _  |  / /_\ \ \ / / _` |/ _` |",
+        r"  \__, / /_ | (_| | / / _ \ \ V / (_| | (_| |",
+        r"    /_/____| \__,_|/_/   \_\ \_/ \__,_|\__,_|",
         r" --------------------------------------------",
-        r"  ROLE    : CS Student @ SFSU (SF Bay Area)",
-        r"  FOCUS   : Full Stack Dev & AI Tools",
-        r"  STACK   : Python, TS, React, FastAPI, Docker",
+        r"  ROLE    : BCA Student @ SDJIC (VNSGU)",
+        r"  FOCUS   : Web Dev & Software Engineering",
+        r"  STACK   : JS, HTML/CSS, React, Python",
         r"  STATUS  : 🟢 Active & Open Source Dev",
         r" --------------------------------------------",
         r" [####################################] 100%"
@@ -27,7 +28,7 @@ def generate_ascii_svg():
         y = start_y + (idx * line_height)
         delay = round(0.05 + (idx * 0.06), 2)
         
-        if "andriidrok1" in line or "ROLE" in line:
+        if "92-avadh" in line or "ROLE" in line:
             color = "#00f2fe"
         elif "STATUS" in line or "100%" in line:
             color = "#50fa7b"
@@ -84,13 +85,13 @@ def generate_ascii_svg():
 {chr(10).join(rows_xml)}
 
   <!-- Blinking Cursor -->
-  <rect class="cursor" x="338" y="235" width="8" height="12" rx="1" ry="1" />
+  <rect class="cursor" x="338" y="247" width="8" height="12" rx="1" ry="1" />
 </svg>'''
 
-    with open("andriidrok1-ascii.svg", "w", encoding="utf-8") as f:
+    with open("avadh-ascii.svg", "w", encoding="utf-8") as f:
         f.write(svg_content)
 
-    print("Successfully updated andriidrok1-ascii.svg")
+    print("Successfully updated avadh-ascii.svg")
 
 if __name__ == "__main__":
     generate_ascii_svg()

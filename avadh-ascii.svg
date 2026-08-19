@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="370" height="280" viewBox="0 0 370 280">
+  <style>
+    .bg { fill: #0d1117; stroke: #30363d; stroke-width: 1px; }
+    .title-bar { fill: #161b22; }
+    .title-text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; font-weight: bold; fill: #3fb950; }
+    .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; white-space: pre; }
+    
+    .row {
+      opacity: 0;
+      animation: typeIn 0.3s ease-out forwards;
+    }
+    
+    .cursor {
+      animation: blink 0.9s infinite;
+      fill: #50fa7b;
+    }
+
+    @keyframes typeIn {
+      0% { opacity: 0; transform: translateY(3px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+
+  <!-- Card Background -->
+  <rect class="bg" width="370" height="280" rx="8" ry="8" />
+
+  <!-- Window Controls Header -->
+  <rect class="title-bar" width="370" height="36" rx="8" ry="8" />
+  <circle cx="20" cy="18" r="5" fill="#ff5f56" />
+  <circle cx="36" cy="18" r="5" fill="#ffbd2e" />
+  <circle cx="52" cy="18" r="5" fill="#27c93f" />
+  <text x="72" y="22" class="title-text">terminal --avatar 92-avadh</text>
+
+  <!-- ASCII Art Content -->
+    <g class="row" style="animation-delay: 0.05s;">
+      <text x="20" y="65" fill="#8b949e" class="code">   _  ___              ___                  |</text>
+    </g>
+    <g class="row" style="animation-delay: 0.11s;">
+      <text x="20" y="82" fill="#8b949e" class="code">  / _||__ \   ____    / _ \ _   ____ _  __| |</text>
+    </g>
+    <g class="row" style="animation-delay: 0.17s;">
+      <text x="20" y="99" fill="#8b949e" class="code"> | (_) / /   / _  |  / /_\ \ \ / / _` |/ _` |</text>
+    </g>
+    <g class="row" style="animation-delay: 0.23s;">
+      <text x="20" y="116" fill="#8b949e" class="code">  \__, / /_ | (_| | / / _ \ \ V / (_| | (_| |</text>
+    </g>
+    <g class="row" style="animation-delay: 0.29s;">
+      <text x="20" y="133" fill="#8b949e" class="code">    /_/____| \__,_|/_/   \_\ \_/ \__,_|\__,_|</text>
+    </g>
+    <g class="row" style="animation-delay: 0.35s;">
+      <text x="20" y="150" fill="#444c56" class="code"> --------------------------------------------</text>
+    </g>
+    <g class="row" style="animation-delay: 0.41s;">
+      <text x="20" y="167" fill="#00f2fe" class="code">  ROLE    : BCA Student @ SDJIC (VNSGU)</text>
+    </g>
+    <g class="row" style="animation-delay: 0.47s;">
+      <text x="20" y="184" fill="#8b949e" class="code">  FOCUS   : Web Dev &amp; Software Engineering</text>
+    </g>
+    <g class="row" style="animation-delay: 0.53s;">
+      <text x="20" y="201" fill="#8b949e" class="code">  STACK   : JS, HTML/CSS, React, Python</text>
+    </g>
+    <g class="row" style="animation-delay: 0.59s;">
+      <text x="20" y="218" fill="#50fa7b" class="code">  STATUS  : 🟢 Active &amp; Open Source Dev</text>
+    </g>
+    <g class="row" style="animation-delay: 0.65s;">
+      <text x="20" y="235" fill="#444c56" class="code"> --------------------------------------------</text>
+    </g>
+    <g class="row" style="animation-delay: 0.71s;">
+      <text x="20" y="252" fill="#50fa7b" class="code"> [####################################] 100%</text>
+    </g>
+
+  <!-- Blinking Cursor -->
+  <rect class="cursor" x="338" y="247" width="8" height="12" rx="1" ry="1" />
+</svg>
