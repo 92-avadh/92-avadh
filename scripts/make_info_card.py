@@ -12,7 +12,7 @@ def render_info_card():
         ("Projects", "Amazon Clone, RPS Game, Auth Pages"),
         ("Uptime", "24/7 Continuous Learning"),
         ("Focus", "Full Stack Development & Web Apps"),
-        ("Status", "🟢 Open for Open-Source & Projects")
+        ("Status", "Active & Open Source Dev")
     ]
 
     skills = [
@@ -28,10 +28,15 @@ def render_info_card():
     for idx, (label, val) in enumerate(details):
         y = start_y + (idx * 20)
         delay = round(0.08 + (idx * 0.06), 2)
-        val_color = "#3fb950" if "🟢" in val else "#c9d1d9"
+        val_color = "#3fb950" if label == "Status" else "#c9d1d9"
+        
+        status_dot = '<circle cx="90" cy="' + str(y - 4) + '" r="4" fill="#3fb950" />' if label == "Status" else ''
+        val_x = "102" if label == "Status" else "95"
+
         xml_elements.append(f'''    <g class="fade-item" style="animation-delay: {delay}s;">
       <text x="20" y="{y}" class="label">{label}:</text>
-      <text x="95" y="{y}" class="val" fill="{val_color}">{val}</text>
+      {status_dot}
+      <text x="{val_x}" y="{y}" class="val" fill="{val_color}">{val}</text>
     </g>''')
 
     # Skill Bars
@@ -55,7 +60,8 @@ def render_info_card():
         x = 400 + (idx * 11)
         squares.append(f'<rect x="{x}" y="255" width="8" height="8" rx="2" ry="2" fill="{c}" />')
 
-    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
+    svg_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
   <style>
     .card-bg {{ fill: #0d1117; stroke: #30363d; stroke-width: 1px; }}
     .title-bar {{ fill: #161b22; }}
@@ -98,7 +104,7 @@ def render_info_card():
     with open("info-card.svg", "w", encoding="utf-8") as f:
         f.write(svg_content)
 
-    print("Successfully updated info-card.svg")
+    print("Successfully updated info-card.svg with clean XML header and status dot")
 
 if __name__ == "__main__":
     render_info_card()

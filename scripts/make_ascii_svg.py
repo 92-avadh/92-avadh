@@ -15,7 +15,7 @@ def generate_ascii_svg():
         r"  ROLE    : BCA Student @ SDJIC (VNSGU)",
         r"  FOCUS   : Web Dev & Software Engineering",
         r"  STACK   : JS, HTML/CSS, React, Python",
-        r"  STATUS  : 🟢 Active & Open Source Dev",
+        r"  STATUS  : Active & Open Source Dev",
         r" --------------------------------------------",
         r" [####################################] 100%"
     ]
@@ -43,7 +43,8 @@ def generate_ascii_svg():
       <text x="20" y="{y}" fill="{color}" class="code">{safe_line}</text>
     </g>''')
 
-    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
+    svg_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
   <style>
     .bg {{ fill: #0d1117; stroke: #30363d; stroke-width: 1px; }}
     .title-bar {{ fill: #161b22; }}

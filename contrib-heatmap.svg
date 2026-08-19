@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="860" height="160" viewBox="0 0 860 160">
   <style>
     .bg { fill: #0d1117; stroke: #30363d; stroke-width: 1px; }
@@ -22,7 +23,7 @@
   <rect class="bg" width="860" height="160" rx="8" ry="8" />
 
   <!-- Header & Stats -->
-  <text x="20" y="26" class="title">⚡ 92-avadh / contribution-graph</text>
+  <text x="20" y="26" class="title">92-avadh / contribution-graph</text>
   <text x="560" y="26" class="stats">
     Total: <tspan class="stat-val">306</tspan> | 
     Streak: <tspan class="stat-val">0d</tspan> | 

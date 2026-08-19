@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="370" height="280" viewBox="0 0 370 280">
   <style>
     .bg { fill: #0d1117; stroke: #30363d; stroke-width: 1px; }
@@ -65,7 +66,7 @@
       <text x="20" y="201" fill="#8b949e" class="code">  STACK   : JS, HTML/CSS, React, Python</text>
     </g>
     <g class="row" style="animation-delay: 0.59s;">
-      <text x="20" y="218" fill="#50fa7b" class="code">  STATUS  : 🟢 Active &amp; Open Source Dev</text>
+      <text x="20" y="218" fill="#50fa7b" class="code">  STATUS  : Active &amp; Open Source Dev</text>
     </g>
     <g class="row" style="animation-delay: 0.65s;">
       <text x="20" y="235" fill="#444c56" class="code"> --------------------------------------------</text>

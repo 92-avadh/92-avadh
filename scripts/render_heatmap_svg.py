@@ -50,7 +50,8 @@ def render_heatmap():
         ('<text x="18" y="132" class="lbl">Fri</text>')
     ]
 
-    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
+    svg_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
   <style>
     .bg {{ fill: #0d1117; stroke: #30363d; stroke-width: 1px; }}
     .title {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; font-weight: bold; fill: #58a6ff; }}
@@ -74,7 +75,7 @@ def render_heatmap():
   <rect class="bg" width="{width}" height="{height}" rx="8" ry="8" />
 
   <!-- Header & Stats -->
-  <text x="20" y="26" class="title">⚡ {username} / contribution-graph</text>
+  <text x="20" y="26" class="title">{username} / contribution-graph</text>
   <text x="560" y="26" class="stats">
     Total: <tspan class="stat-val">{total_contributions:,}</tspan> | 
     Streak: <tspan class="stat-val">{current_streak}d</tspan> | 

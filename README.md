@@ -10,6 +10,8 @@
   <br><br>
 
   <h3><code>92-avadh@github ~ $ whoami</code></h3>
-  <img src="./info-card.svg" width="540" />
+  <br>
+  <img src="./avadh-ascii.svg" width="370" />
+  <img src="./info-card.svg" width="490" />
 
 </div>
