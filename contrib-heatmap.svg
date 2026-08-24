@@ -25,9 +25,9 @@
   <!-- Header & Stats -->
   <text x="20" y="26" class="title">92-avadh / contribution-graph</text>
   <text x="560" y="26" class="stats">
-    Total: <tspan class="stat-val">316</tspan> | 
-    Streak: <tspan class="stat-val">0d</tspan> | 
-    Best: <tspan class="stat-val">27d</tspan>
+    Total: <tspan class="stat-val">320</tspan> | 
+    Streak: <tspan class="stat-val">29d</tspan> | 
+    Best: <tspan class="stat-val">29d</tspan>
   </text>
 
   <!-- Day Labels -->
@@ -399,7 +399,8 @@
     <rect class="box" x="800" y="105" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.672s;" />
     <rect class="box" x="800" y="120" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.687s;" />
     <rect class="box" x="800" y="135" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.702s;" />
-    <rect class="box" x="815" y="45" width="11" height="11" rx="2" ry="2" fill="#161b22" style="animation-delay: 0.624s;" />
+    <rect class="box" x="815" y="45" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.624s;" />
+    <rect class="box" x="815" y="60" width="11" height="11" rx="2" ry="2" fill="#0e4429" style="animation-delay: 0.639s;" />
   </g>
 
   <!-- Legend -->
