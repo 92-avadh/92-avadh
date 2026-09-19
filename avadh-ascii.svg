@@ -63,7 +63,7 @@
       <text x="20" y="184" fill="#8b949e" class="code">  FOCUS   : Web Dev &amp; Software Engineering</text>
     </g>
     <g class="row" style="animation-delay: 0.53s;">
-      <text x="20" y="201" fill="#8b949e" class="code">  STACK   : JS, HTML/CSS, React, Python</text>
+      <text x="20" y="201" fill="#8b949e" class="code">  STACK   : Next.js, React, Flutter, Python</text>
     </g>
     <g class="row" style="animation-delay: 0.59s;">
       <text x="20" y="218" fill="#50fa7b" class="code">  STATUS  : Active &amp; Open Source Dev</text>

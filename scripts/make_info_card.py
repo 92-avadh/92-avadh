@@ -8,7 +8,7 @@ def render_info_card():
     details = [
         ("User", "Avadh (92-avadh)"),
         ("Degree", "BCA @ SDJIC (VNSGU University)"),
-        ("Stack", "JavaScript, HTML, CSS, React, Node.js"),
+        ("Stack", "Next.js, React, Node.js, Flutter, Python"),
         ("Projects", "Amazon Clone, RPS Game, Auth Pages"),
         ("Uptime", "24/7 Continuous Learning"),
         ("Focus", "Full Stack Development & Web Apps"),
@@ -17,7 +17,7 @@ def render_info_card():
 
     skills = [
         ("JavaScript / Web", 92, "#58a6ff"),
-        ("HTML & CSS", 95, "#3fb950"),
+        ("Next.js / Node.js", 94, "#3fb950"),
         ("React / Node.js", 85, "#bc8cff")
     ]
 

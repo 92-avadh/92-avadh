@@ -14,7 +14,7 @@ def generate_ascii_svg():
         r" --------------------------------------------",
         r"  ROLE    : BCA Student @ SDJIC (VNSGU)",
         r"  FOCUS   : Web Dev & Software Engineering",
-        r"  STACK   : JS, HTML/CSS, React, Python",
+        r"  STACK   : Next.js, React, Flutter, Python",
         r"  STATUS  : Active & Open Source Dev",
         r" --------------------------------------------",
         r" [####################################] 100%"
